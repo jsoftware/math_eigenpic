@@ -349,7 +349,6 @@ pas 4 4;
 rem form end;
 )
 iflapackavail=: 3 : 0
-if. UNAME-:'Linux' do. 1 return. end.
 try.
   fexist deb dll_jlapack_ -. '"'
 catch.
