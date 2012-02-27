@@ -1,11 +1,5 @@
-3 : 0''
-if. IFJ6 do.
-  require '~system/extras/migrate/gl2.ijs'
-else.
-  require 'gui/gtkwd'
-end.
-''
-)
+require 'gtkwd gl2'
+
 require '~addons/math/lapack/lapack.ijs'
 require '~addons/math/lapack/dgeev.ijs'
 
