@@ -372,7 +372,7 @@ wd 'setfont ev2 ',FIXFONT
 wd 'setfont rv1 ',FIXFONT
 wd 'setfont rv2 ',FIXFONT
 wd 'pshow'
-wdloop^:(-.IFJ6)''
+evtloop^:(-.IFJ6)''
 )
 ep_close=: 3 : 0
 try. wd 'psel epd;pclose' catch. end.

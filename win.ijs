@@ -71,7 +71,7 @@ NB.   fx=. 0 ". wd 'qformx'
 NB.   wd 'pmove 0 5 ',": 2 }. fx
 NB. end.
 wd 'pshow'
-wdloop^:(-.IFJ6)''
+evtloop^:(-.IFJ6)''
 )
 
 NB. =========================================================
