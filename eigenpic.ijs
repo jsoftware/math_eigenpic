@@ -46,7 +46,7 @@ deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 
 dist=: +/ &. (*:"_)
 
-info=: wdinfo @ (SYSNAME&;)
+info=: sminfo @ (SYSNAME&;)
 
 int01=: i.@>: % ]
 
