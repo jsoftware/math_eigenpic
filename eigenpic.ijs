@@ -73,7 +73,7 @@ tomatrix=: (_2 {. 1 1 , $) $ ,
 tominus=: '-'&(I. @(e.&'_')@]})
 unitvec=: % dist
 
-wdpclose=: [: wd ::empty 'psel '&,@(,&';pclose')
+wdpclose=: [: wd :: empty 'psel ' , ';pclose' ,~ ":
 
 addLF=: tominus @ }. @ , @ (LF&,.) @ ":
 cleanit=: 3 : 0
@@ -153,7 +153,7 @@ wd'pshow'
 
 wd 'psel epd'
 glsel 'g'
-'x y w h'=. 0 ". wd 'qchildxywhx g'
+'x y w h'=. wdqchildxywhx 'g'
 CX=: CY=: w <. h
 
 OFF=: -: (w-CX), h-CY

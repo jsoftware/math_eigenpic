@@ -67,7 +67,7 @@ wd 'setfont rv2 ',FIXFONT
 NB. wd 'set top 1'
 NB. if. -. IFWINCE do.
 NB.   wd 'pcenter'
-NB.   fx=. 0 ". wd 'qformx'
+NB.   fx=. wdqformx''
 NB.   wd 'pmove 0 5 ',": 2 }. fx
 NB. end.
 wd 'pshow'

@@ -31,7 +31,7 @@ tomatrix=: (_2 {. 1 1 , $) $ ,
 tominus=: '-'&(I. @(e.&'_')@]})
 unitvec=: % dist
 
-wdpclose=: [: wd ::empty 'psel '&,@(,&';pclose')
+wdpclose=: [: wd :: empty 'psel ' , ';pclose' ,~ ":
 
 addLF=: tominus @ }. @ , @ (LF&,.) @ ":
 
