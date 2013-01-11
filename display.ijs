@@ -50,7 +50,7 @@ wd'pshow'
 
 wd 'psel epd'
 glsel 'g'
-'x y w h'=. wdqchildxywhx 'g'
+'w h'=. glqwh''
 CX=: CY=: w <. h
 
 OFF=: -: (w-CX), h-CY

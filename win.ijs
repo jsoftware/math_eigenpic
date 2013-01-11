@@ -31,6 +31,43 @@ pas 4 4;
 rem form end;
 )
 
+EPQT=: 0 : 0
+pc ep qtwd;
+menupop "Examples";
+menu default "&Default" "" "" "";
+menusep;
+menu onezero "&Zero Eigenvalue" "" "" "";
+menusep;
+menu double "&Double Eigenvalue" "" "" "";
+menusep;
+menu complex "&Complex Eigenvalues (1)" "" "" "";
+menusep;
+menu complex2 "C&omplex Eigenvalues (2)" "" "" "";
+menupopz;
+menupop "Help";
+menu about "&About" "" "" "";
+menupopz;
+bin vh;
+xywh 6 10 180 70;cc g0 groupbox rightmove;cn "Matrix";
+bin s;
+xywh 200 16 47 13;cc run button leftmove rightmove;cn "Run";
+bin z;
+xywh 9 21 146 14;cc mat edit ws_border es_autohscroll rightmove;
+xywh 10 38 115 35;cc matrix static rightmove;
+xywh 133 55 47 13;cc negate button leftmove rightmove;cn "Negate";
+bin hv;
+xywh 6 87 120 90;cc g1 groupbox rightscale;cn "Eigenvalues";
+xywh 9 104 110 30;cc ev1 static rightscale;
+xywh 9 142 110 30;cc ev2 static rightscale;
+bin zv;
+xywh 133 87 120 90;cc g2 groupbox leftscale rightmove;cn "Eigenvectors";
+xywh 138 104 110 30;cc rv1 static leftscale rightmove;
+xywh 138 142 110 30;cc rv2 static leftscale rightmove;
+bin zzv;
+pas 4 4;
+rem form end;
+)
+
 NB. =========================================================
 iflapackavail=: 3 : 0
 try.
@@ -52,7 +89,7 @@ wdpclose 'ep'
 wdpclose 'epd'
 
 epinit''
-wd EP
+wd IFQT{::EP;EPQT
 wd 'pn *',SYSNAME
 wd 'set mat *',":,MATCHAR
 wd 'set matrix *', addLF MATRIX
@@ -71,7 +108,7 @@ NB.   fx=. wdqformx''
 NB.   wd 'pmove 0 5 ',": 2 }. fx
 NB. end.
 wd 'pshow'
-evtloop^:(-.IFJ6)''
+evtloop''
 )
 
 NB. =========================================================
