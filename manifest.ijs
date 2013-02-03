@@ -8,7 +8,7 @@ eigenpicture
 
 VERSION=: '1.0.5'
 
-RELEASE=: 'j602 j701'
+RELEASE=: 'j602 j701 j801'
 
 FILES=: 0 : 0
 eigenpic.ijs
