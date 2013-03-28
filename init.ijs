@@ -1,4 +1,4 @@
-require 'gtkwd gl2'
+require 'gl2'
 
 require '~addons/math/lapack/lapack.ijs'
 require '~addons/math/lapack/dgeev.ijs'
@@ -32,11 +32,11 @@ SPOKES=: 60
 SYSNAME=: 'Eigenpicture'
 
 3 : 0''
-if. IFWINCE do.
-  FONTSIZE=: 40
-  FONTNAME=: 'Tahoma '
-else.
+if. IFWIN do.
   FONTSIZE=: 24
   FONTNAME=: 'Arial '
+else.
+  FONTSIZE=: 24
+  FONTNAME=: 'Sans '
 end.
 )

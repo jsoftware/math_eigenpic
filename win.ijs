@@ -16,54 +16,26 @@ menupopz;
 menupop "Help";
 menu about "&About" "" "" "";
 menupopz;
-xywh 9 21 146 14;cc mat edit ws_border es_autohscroll rightmove;
-xywh 10 38 115 35;cc matrix static rightmove;
-xywh 133 55 47 13;cc negate button leftmove rightmove;cn "Negate";
-xywh 6 10 180 70;cc g0 groupbox rightmove;cn "Matrix";
-xywh 9 104 110 30;cc ev1 static rightscale;
-xywh 9 142 110 30;cc ev2 static rightscale;
-xywh 6 87 120 90;cc g1 groupbox rightscale;cn "Eigenvalues";
-xywh 138 104 110 30;cc rv1 static leftscale rightmove;
-xywh 138 142 110 30;cc rv2 static leftscale rightmove;
-xywh 133 87 120 90;cc g2 groupbox leftscale rightmove;cn "Eigenvectors";
-xywh 200 16 47 13;cc run button leftmove rightmove;cn "Run";
-pas 4 4;
-rem form end;
-)
-
-EPQT=: 0 : 0
-pc ep qtwd;
-menupop "Examples";
-menu default "&Default" "" "" "";
-menusep;
-menu onezero "&Zero Eigenvalue" "" "" "";
-menusep;
-menu double "&Double Eigenvalue" "" "" "";
-menusep;
-menu complex "&Complex Eigenvalues (1)" "" "" "";
-menusep;
-menu complex2 "C&omplex Eigenvalues (2)" "" "" "";
-menupopz;
-menupop "Help";
-menu about "&About" "" "" "";
-menupopz;
 bin vh;
-xywh 6 10 180 70;cc g0 groupbox rightmove;cn "Matrix";
+groupbox "Matrix";
 bin s;
-xywh 200 16 47 13;cc run button leftmove rightmove;cn "Run";
+cc run button;cn "Run";
+groupboxend;
 bin z;
-xywh 9 21 146 14;cc mat edit ws_border es_autohscroll rightmove;
-xywh 10 38 115 35;cc matrix static rightmove;
-xywh 133 55 47 13;cc negate button leftmove rightmove;cn "Negate";
+cc mat edit;
+cc matrix static;
+cc negate button;cn "Negate";
 bin hv;
-xywh 6 87 120 90;cc g1 groupbox rightscale;cn "Eigenvalues";
-xywh 9 104 110 30;cc ev1 static rightscale;
-xywh 9 142 110 30;cc ev2 static rightscale;
+groupbox "Eigenvalues";
+cc ev1 static rightscale;
+cc ev2 static rightscale;
+groupboxend;
 bin zv;
-xywh 133 87 120 90;cc g2 groupbox leftscale rightmove;cn "Eigenvectors";
-xywh 138 104 110 30;cc rv1 static leftscale rightmove;
-xywh 138 142 110 30;cc rv2 static leftscale rightmove;
-bin zzv;
+groupbox "Eigenvectors";
+cc rv1 static;
+cc rv2 static;
+groupboxend;
+bin zz;
 pas 4 4;
 rem form end;
 )
@@ -89,10 +61,10 @@ wdpclose 'ep'
 wdpclose 'epd'
 
 epinit''
-wd IFQT{::EP;EPQT
+wd EP
 wd 'pn *',SYSNAME
-wd 'set mat *',":,MATCHAR
-wd 'set matrix *', addLF MATRIX
+wd 'set mat text *',":,MATCHAR
+wd 'set matrix text *', addLF MATRIX
 wd 'setfont mat ',FIXFONT
 wd 'setfont matrix ',FIXFONT
 wd 'set ev1;set ev2;set rv1;set rv2'
@@ -102,13 +74,12 @@ wd 'setfont rv1 ',FIXFONT
 wd 'setfont rv2 ',FIXFONT
 
 NB. wd 'set top 1'
-NB. if. -. IFWINCE do.
-NB.   wd 'pcenter'
-NB.   fx=. wdqformx''
-NB.   wd 'pmove 0 5 ',": 2 }. fx
-NB. end.
+if. -. 'Android'-:UNAME do.
+  wd 'pcenter'
+  fx=. wdqform''
+  wd 'pmove 0 5 ',": 2 }. fx
+end.
 wd 'pshow'
-evtloop''
 )
 
 NB. =========================================================
@@ -192,14 +163,14 @@ ep_cancel=: ep_cancel_button=: ep_close
 NB. =========================================================
 epdoit=: 3 : 0
 calc''
-wd 'set mat *',":,MATCHAR
-wd 'set matrix *', addLF MATRIX
+wd 'set mat text *',":,MATCHAR
+wd 'set matrix text *', addLF MATRIX
 'x1 y1 x2 y2'=. tominus@": each , RV
 'e1 e2'=. tominus@": each , EV
-wd 'set rv1 *',x1,LF,x2
-wd 'set ev1 *', e1
-wd 'set rv2 *', y1,LF,y2
-wd 'set ev2 *', e2
+wd 'set rv1 text *',x1,LF,x2
+wd 'set ev1 text *', e1
+wd 'set rv2 text *', y1,LF,y2
+wd 'set ev2 text *', e2
 epdraw''
 glpaint''
 )
