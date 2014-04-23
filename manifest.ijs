@@ -6,11 +6,11 @@ DESCRIPTION=: 0 : 0
 eigenpicture
 )
 
-VERSION=: '1.0.6'
+NB. VERSION=: '1.0.7'
+VERSION=: ''  NB. for now...
 
-RELEASE=: 'j801'
+RELEASE=: 'j802'
 
 FILES=: 0 : 0
 eigenpic.ijs
 )
-
