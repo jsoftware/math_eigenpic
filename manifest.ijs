@@ -6,8 +6,7 @@ DESCRIPTION=: 0 : 0
 eigenpicture
 )
 
-NB. VERSION=: '1.0.7'
-VERSION=: ''  NB. for now...
+VERSION=: '1.0.8'
 
 RELEASE=: 'j802'
 

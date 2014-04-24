@@ -40,8 +40,6 @@ else.
   FONTNAME=: 'Sans '
 end.
 )
-
-
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 
 dist=: +/ &. (*:"_)
@@ -89,7 +87,7 @@ getfontsize=: 13 : '{.1{._1 -.~ _1 ". y'
 setfontsize=: 4 : 0
 b=. ~: /\ y='"'
 nam=. b#y
-txt=. ;:(-.b)#y	
+txt=. ;:(-.b)#y
 ndx=. 1 i.~ ([: *./ e.&'0123456789.') &> txt
 nam, ; ,&' ' &.> (<fmt x) ndx } txt
 )
@@ -115,9 +113,9 @@ spokes=: 3 : 0
 )
 EPD=: 0 : 0
 pc epd closeok;
-xywh 0 0 200 200;cc g isigraph ws_border rightmove bottommove;
+minwh 400 400;
+cc g isidraw;
 pas 0 0;
-rem form end;
 )
 epd_close=: 3 : 0
 wd'pclose'
@@ -140,14 +138,14 @@ drawpic''
 glpaint ''
 LASTPTS=: pts
 )
-epd_g_paint=: epdraw
+epd_g_resize=: epdraw
 epd_cancel_button=: epd_close
 epdraw=: 3 : 0
 
 if. opened=. 0=wdisparent 'epd' do.
   wd EPD
   wd 'pn *',SYSNAME
-  wdfit''
+  wd 'pmove 600 50 -1 -1'
 end.
 wd'pshow'
 
@@ -156,7 +154,7 @@ glsel 'g'
 'w h'=. glqwh''
 CX=: CY=: w <. h
 
-OFF=: -: (w-CX), h-CY
+OFF=: rndint -: (w-CX), h-CY
 
 glrgb BACKCOLOR
 glbrush''
@@ -198,10 +196,10 @@ matrix product, and hence no blue line.
 )
 drawlines=: 3 : 0
 y=. tomatrix y
-gllines OFF movepos~ flipypos (y scalepos X1,Y1) movepos MX,MY
+gllines OFF movepos~ flipypos rndint (y scalepos X1,Y1) movepos MX,MY
 )
 drawpin=: 3 : 0
-y=. tomatrix y
+y=. rndint tomatrix y
 f=. (,&2 2) @: <: @: (_2&{.)
 gllines OFF movepos~ y
 glellipse OFF moverect~ f"1 y
@@ -261,13 +259,17 @@ fsize=. FONTSIZE * CY % 1000
 font=. FONTNAME,": fsize
 'bx tx'=. rndint CX * (,-.) XMARGIN-TICMAJOR
 'by ty'=. rndint CY * (,-.) YMARGIN-TICMAJOR
+
+AA=: OFF
+BB=: bx,by,bx,ty,tx,ty,tx,by,bx,by
+
 gllines OFF movepos~ bx,by,bx,ty,tx,ty,tx,by,bx,by
 'minor pos'=. gettics x,x+w
 
 len=. >: (1+minor) * <: #pos
 mark=. len $(1,minor)#rndint CX * TICMAJOR, TICMINOR
 
-x=. bx + (tx-bx) * int01 len - 1
+x=. rndint bx + (tx-bx) * int01 len - 1
 gllines OFF movepos~x ,. by ,. x ,. by+mark
 gllines OFF movepos~x ,. ty ,. x ,. ty-mark
 x=. bx + (tx-bx) * int01 (#pos) - 1
@@ -281,7 +283,7 @@ labs (gltext@>@[ gltextxy)"0 1 p
 len=. >: (1+minor) * <: #pos
 mark=. len $(1,minor)#rndint CY * TICMAJOR, TICMINOR
 
-y=. by + (ty-by) * int01 len - 1
+y=. rndint by + (ty-by) * int01 len - 1
 gllines OFF movepos~bx ,. y ,. (bx+mark) ,. y
 gllines OFF movepos~tx ,. y ,. (tx-mark) ,. y
 y=. (by - fsize%2) + (ty-by) * int01 (#pos) - 1
@@ -313,7 +315,7 @@ minor=. (1,max) {~ max <: <. 40 % #pos
 minor;pos
 )
 EP=: 0 : 0
-pc ep;
+pc ep closeok escclose;
 menupop "Examples";
 menu default "&Default" "" "" "";
 menusep;
@@ -330,28 +332,27 @@ menu about "&About" "" "" "";
 menupopz;
 bin vh;
 groupbox "Matrix";
-bin s;
-cc run button;cn "Run";
-groupboxend;
-bin z;
 cc mat edit;
 cc matrix static;
+bin hs;
 cc negate button;cn "Negate";
-bin hv;
+bin z;
+groupboxend;
+bin v;cc run button;cn "Run";
+bin szzh;
 groupbox "Eigenvalues";
 cc ev1 static rightscale;
 cc ev2 static rightscale;
 groupboxend;
-bin zv;
 groupbox "Eigenvectors";
 cc rv1 static;
 cc rv2 static;
 groupboxend;
 bin zz;
 pas 4 4;
-rem form end;
 )
 iflapackavail=: 3 : 0
+1 return.
 try.
   fexist deb dll_jlapack_ -. '"'
 catch.
@@ -359,40 +360,34 @@ catch.
 end.
 )
 ep_run=: 3 : 0
-
 if. -. iflapackavail'' do.
   info 'Demo requires LAPACK'
   return.
 end.
-
 wdpclose 'ep'
 wdpclose 'epd'
-
 epinit''
 wd EP
 wd 'pn *',SYSNAME
 wd 'set mat text *',":,MATCHAR
 wd 'set matrix text *', addLF MATRIX
-wd 'setfont mat ',FIXFONT
-wd 'setfont matrix ',FIXFONT
-wd 'set ev1;set ev2;set rv1;set rv2'
-wd 'setfont ev1 ',FIXFONT
-wd 'setfont ev2 ',FIXFONT
-wd 'setfont rv1 ',FIXFONT
-wd 'setfont rv2 ',FIXFONT
-if. -. 'Android'-:UNAME do.
-  wd 'pcenter'
-  fx=. wdqform''
-  wd 'pmove 0 5 ',": 2 }. fx
-end.
+wd 'setfont mat fixfont'
+wd 'setfont matrix fixfont'
+wd 'setfont ev1 fixfont'
+wd 'setfont ev2 fixfont'
+wd 'setfont rv1 fixfont'
+wd 'setfont rv2 fixfont'
+wd 'set ev1 text;set ev2 text;set rv1 text;set rv2 text'
+wd 'pmove 50 20 500 350'
 wd 'pshow'
 )
 ep_close=: 3 : 0
+smoutput 'ep_close'
 try. wd 'psel epd;pclose' catch. end.
 wd 'psel ep;pclose'
 )
 ep_about_button=: 3 : 0
-'About' wdview '';(topara ABOUT);1
+wd 'mb about About *',topara ABOUT
 )
 ep_complex_button=: 3 : 0
 MATRIX=: 2 2 $ ". MATCHAR=: '-1 2 _1 1'
