@@ -30,16 +30,6 @@ IFSPOKES=: 1
 SPOKES=: 60
 
 SYSNAME=: 'Eigenpicture'
-
-3 : 0''
-if. IFWIN do.
-  FONTSIZE=: 24
-  FONTNAME=: 'Arial '
-else.
-  FONTSIZE=: 24
-  FONTNAME=: 'Sans '
-end.
-)
 deb=: #~ (+. 1: |. (> </\))@(' '&~:)
 
 dist=: +/ &. (*:"_)
@@ -113,8 +103,8 @@ spokes=: 3 : 0
 )
 EPD=: 0 : 0
 pc epd closeok;
-minwh 400 400;
-cc g isidraw;
+minwh 450 450;
+cc g isidraw flush;
 pas 0 0;
 )
 epd_close=: 3 : 0
@@ -128,7 +118,8 @@ end=. rim + MATRIX mp rim
 j=. (MX,MY) + rim * X1,Y1
 pts=. flipypos 2 4$(MX,MY), j, j, (MX,MY) + end * X1,Y1
 glsel 'g'
-setcolor BACKCOLOR
+glclear''
+drawframe ''
 glpen 2 0
 drawpin LASTPTS
 setcolor EIGENCOLOR
@@ -157,14 +148,14 @@ CX=: CY=: w <. h
 OFF=: rndint -: (w-CX), h-CY
 
 glrgb BACKCOLOR
-glbrush''
+glpen 1 0 [ glbrush''
 glrect 0 0,w,h
 
 glrgb FORECOLOR
 glbrush''
 glpen 1 0
 gltextcolor ''
-drawframe WID * _1 _1 2 2
+drawframe''
 genpic WID * _1 _1 2 2
 
 if. opened do. wd'pshow' end.
@@ -253,15 +244,9 @@ new=. y * old=. 2 3{x
 )
 drawframe=: 3 : 0
 
-'x y w h'=. y
-
-fsize=. FONTSIZE * CY % 1000
-font=. FONTNAME,": fsize
+'x y w h'=.  WID * _1 _1 2 2
 'bx tx'=. rndint CX * (,-.) XMARGIN-TICMAJOR
 'by ty'=. rndint CY * (,-.) YMARGIN-TICMAJOR
-
-AA=: OFF
-BB=: bx,by,bx,ty,tx,ty,tx,by,bx,by
 
 gllines OFF movepos~ bx,by,bx,ty,tx,ty,tx,by,bx,by
 'minor pos'=. gettics x,x+w
@@ -274,7 +259,7 @@ gllines OFF movepos~x ,. by ,. x ,. by+mark
 gllines OFF movepos~x ,. ty ,. x ,. ty-mark
 x=. bx + (tx-bx) * int01 (#pos) - 1
 labs=. tominus@": each pos
-glfont font
+glfont FONT
 off=. <. -: {."1 glqextent &> labs
 p=. OFF movepos~ (x-off) ,. ty + CY * TICMAJOR
 labs (gltext@>@[ gltextxy)"0 1 p
@@ -286,9 +271,9 @@ mark=. len $(1,minor)#rndint CY * TICMAJOR, TICMINOR
 y=. rndint by + (ty-by) * int01 len - 1
 gllines OFF movepos~bx ,. y ,. (bx+mark) ,. y
 gllines OFF movepos~tx ,. y ,. (tx-mark) ,. y
-y=. (by - fsize%2) + (ty-by) * int01 (#pos) - 1
+y=. (by - FONTSIZE%2) + (ty-by) * int01 (#pos) - 1
 labs=. tominus@": each |. pos
-glfont font
+glfont FONT
 off=. {."1 glqextent &> labs
 p=. OFF movepos~ (bx-off + CX*TICMAJOR) ,. y
 
@@ -378,7 +363,7 @@ wd 'setfont ev2 fixfont'
 wd 'setfont rv1 fixfont'
 wd 'setfont rv2 fixfont'
 wd 'set ev1 text;set ev2 text;set rv1 text;set rv2 text'
-wd 'pmove 50 20 500 350'
+wd 'pmove 50 20 400 300'
 wd 'pshow'
 )
 ep_close=: 3 : 0
@@ -436,6 +421,8 @@ end.
 ep_mat_button=: ep_run_button
 ep_cancel=: ep_cancel_button=: ep_close
 epdoit=: 3 : 0
+FONT=: 0 1 {:: wd'qtstate profont'
+FONTSIZE=: getfontsize FONT
 calc''
 wd 'set mat text *',":,MATCHAR
 wd 'set matrix text *', addLF MATRIX
