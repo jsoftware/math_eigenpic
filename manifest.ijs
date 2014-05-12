@@ -18,4 +18,3 @@ math/lapack
 FILES=: 0 : 0
 eigenpic.ijs
 )
-PLATFORMS=: 'linux win darwin android'
