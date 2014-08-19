@@ -120,10 +120,10 @@ pts=. flipypos 2 4$(MX,MY), j, j, (MX,MY) + end * X1,Y1
 glsel 'g'
 glclear''
 drawframe ''
-glpen 2 0
+glpen 2 1
 drawpin LASTPTS
 setcolor EIGENCOLOR
-glpen 2 0
+glpen 2 1
 drawpin pts
 drawpic''
 glpaint ''
@@ -148,12 +148,12 @@ CX=: CY=: w <. h
 OFF=: rndint -: (w-CX), h-CY
 
 glrgb BACKCOLOR
-glpen 1 0 [ glbrush''
+glpen 1 1 [ glbrush''
 glrect 0 0,w,h
 
 glrgb FORECOLOR
 glbrush''
-glpen 1 0
+glpen 1 1
 gltextcolor ''
 drawframe''
 genpic WID * _1 _1 2 2
@@ -198,11 +198,11 @@ glellipse OFF moverect~ f"1 y
 
 drawpic=: 3 : 0
 setcolor FORECOLOR
-glpen 1 0
+glpen 1 1
 drawpin FOREPIN
 if. #AXISPIN do.
   setcolor AXISCOLOR
-  glpen 2 0
+  glpen 2 1
   drawpin AXISPIN
 end.
 )
@@ -260,6 +260,7 @@ gllines OFF movepos~x ,. ty ,. x ,. ty-mark
 x=. bx + (tx-bx) * int01 (#pos) - 1
 labs=. tominus@": each pos
 glfont FONT
+glfontextent FONT
 off=. <. -: {."1 glqextent &> labs
 p=. OFF movepos~ (x-off) ,. ty + CY * TICMAJOR
 labs (gltext@>@[ gltextxy)"0 1 p
@@ -274,6 +275,7 @@ gllines OFF movepos~tx ,. y ,. (tx-mark) ,. y
 y=. (by - FONTSIZE%2) + (ty-by) * int01 (#pos) - 1
 labs=. tominus@": each |. pos
 glfont FONT
+glfontextent FONT
 off=. {."1 glqextent &> labs
 p=. OFF movepos~ (bx-off + CX*TICMAJOR) ,. y
 

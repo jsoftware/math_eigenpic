@@ -6,9 +6,9 @@ DESCRIPTION=: 0 : 0
 eigenpicture
 )
 
-VERSION=: '1.0.12'
+VERSION=: '1.0.13'
 
-RELEASE=: 'j802 j803'
+RELEASE=: 'j803'
 
 DEPENDS=: 0 : 0
 graphics/gl2
