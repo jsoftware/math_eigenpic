@@ -39,21 +39,7 @@ pas 4 4;
 )
 
 NB. =========================================================
-iflapackavail=: 3 : 0
-1 return.
-try.
-  fexist deb dll_jlapack_ -. '"'
-catch.
-  0
-end.
-)
-
-NB. =========================================================
 ep_run=: 3 : 0
-if. -. iflapackavail'' do.
-  info 'Demo requires LAPACK'
-  return.
-end.
 wdpclose 'ep'
 wdpclose 'epd'
 epinit''

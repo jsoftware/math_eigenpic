@@ -1,12 +1,7 @@
 require 'gl2'
 
-require '~addons/math/lapack/lapack.ijs'
-require '~addons/math/lapack/dgeev.ijs'
-
 coclass 'eigenpic'
 coinsert 'jgl2'
-
-dgeev_z_=: dgeev_jlapack_
 
 BLUE=: 0 0 255
 RED=: 255 0 0

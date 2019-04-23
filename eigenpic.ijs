@@ -1,12 +1,7 @@
 require 'gl2'
 
-require '~addons/math/lapack/lapack.ijs'
-require '~addons/math/lapack/dgeev.ijs'
-
 coclass 'eigenpic'
 coinsert 'jgl2'
-
-dgeev_z_=: dgeev_jlapack_
 
 BLUE=: 0 0 255
 RED=: 255 0 0
@@ -100,6 +95,18 @@ WID=: >. >./ | , END
 )
 spokes=: 3 : 0
 |: 2 1 o./ o. +: }: int01 y
+)
+dgeev=: 3 : 0
+'a b c d'=. ,y
+'m n'=. 1 pick p. ((a*d)-b*c), (-a+d), 1
+e0=: norm 1,~ -b % a - m
+e1=: norm 1,~ -b % a - n
+(|.e1,.e0);(m,n);e0,.e1
+)
+norm=: 3 : 0
+n=. (i.>./) (*+) y
+if. {: +. n{y do. y=. y * + n{y end.
+y % %: +/ | *: y
 )
 EPD=: 0 : 0
 pc epd closeok;
@@ -244,7 +251,7 @@ new=. y * old=. 2 3{x
 )
 drawframe=: 3 : 0
 
-'x y w h'=.  WID * _1 _1 2 2
+'x y w h'=. WID * _1 _1 2 2
 'bx tx'=. rndint CX * (,-.) XMARGIN-TICMAJOR
 'by ty'=. rndint CY * (,-.) YMARGIN-TICMAJOR
 
@@ -338,19 +345,7 @@ groupboxend;
 bin zz;
 pas 4 4;
 )
-iflapackavail=: 3 : 0
-1 return.
-try.
-  fexist deb dll_jlapack_ -. '"'
-catch.
-  0
-end.
-)
 ep_run=: 3 : 0
-if. -. iflapackavail'' do.
-  info 'Demo requires LAPACK'
-  return.
-end.
 wdpclose 'ep'
 wdpclose 'epd'
 epinit''
