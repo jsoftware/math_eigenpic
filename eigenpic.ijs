@@ -99,8 +99,8 @@ spokes=: 3 : 0
 dgeev=: 3 : 0
 'a b c d'=. ,y
 'm n'=. 1 pick p. ((a*d)-b*c), (-a+d), 1
-e0=: norm 1,~ -b % a - m
-e1=: norm 1,~ -b % a - n
+e0=. norm 1,~ -b % a - m
+e1=. norm 1,~ -b % a - n
 (|.e1,.e0);(m,n);e0,.e1
 )
 norm=: 3 : 0
