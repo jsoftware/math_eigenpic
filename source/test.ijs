@@ -1,4 +1,6 @@
-NB. test
+NB. test dgeev
+
+load '~Addons/math/eigenpic/source/dgeev.ijs'
 
 mp=: +/ . *
 
