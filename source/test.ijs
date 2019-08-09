@@ -14,7 +14,12 @@ r=. r,<ev;rv
 'sv tv'=. |: rv
 sb=. (m mp sv) -: s * sv
 tb=. (m mp tv) -: t * tv
-(sb,tb);r
+if. sv -: tv do.
+  vb=. 1
+else.
+  vb=. (ev * =i.2) -: clean (%.rv) mp m mp rv
+end.
+(sb,tb,vb);r
 )
 
 NB. =========================================================
@@ -25,3 +30,8 @@ test_dgeev (4-%:3), 1 _3, 4+%:3
 test_dgeev 0 1 _2 _3
 test_dgeev -1 2 _1 1
 test_dgeev -3 2 _1 1
+
+NB. =========================================================
+NB. matrix with +/- w eigenvalues:
+'a b c'=. 2 3 7
+test_dgeev c,(a-b),(a+b),-c
